@@ -19,8 +19,9 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @GetMapping
-    public List<ProductDTO> getAllProducts() {
-        return productMapper.toDTOs(productService.getAllProducts());
+    public List<ProductDTO> getAllProducts(@RequestParam(required = false) String category,
+                                           @RequestParam(required = false) Double maxPrice) {
+        return productMapper.toDTOs(productService.getAllProducts(category, maxPrice));
     }
 
     @GetMapping(path = "{id}")

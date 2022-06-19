@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ro.fasttrackid.productsapp.exception.custom.ResourceNotFoundException;
 import ro.fasttrackid.productsapp.model.entity.Product;
+import ro.fasttrackid.productsapp.util.Category;
+
 import java.util.List;
 
 @Slf4j
@@ -18,9 +20,9 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public List<Product> getAllProducts() {
-        log.debug("Retrieving all products");
-        return productRepository.findAll();
+    public List<Product> getAllProducts(String category, Double maxPrice) {
+        Integer categoryId = Category.getCategoryByName(category).getId();
+        return productRepository.findFiltered(categoryId, maxPrice);
     }
 
     public Product getProduct(Long id) {
